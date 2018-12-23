@@ -26,6 +26,15 @@ while True:
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break 
+    elif cv2.waitKey(1) & 0xFF == ord("r"):
+        color = (0,0,255)
+
+    elif cv2.waitKey(1) & 0xFF == ord("g"):
+        color = (0,255,0)
+
+
+    elif cv2.waitKey(1) & 0xFF == ord("b"):
+        color = (255,0,0)
 
 cv2.destroyAllWindows()
 
