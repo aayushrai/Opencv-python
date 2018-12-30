@@ -21,7 +21,7 @@ First install python3
 https://www.python.org/downloads/this 
 ```
 
-Then install pip module in python3 
+Then install opencv module in python3 
 
 ```
 https://pypi.org/project/opencv-python/
