@@ -1,4 +1,4 @@
-# opencv-python
+# Opencv-python
 
 It is very famous python module for computer vision,this module also very helpful in image processing.
 
