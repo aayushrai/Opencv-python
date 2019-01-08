@@ -3,20 +3,24 @@ import cv2
 
 page = np.ones([800,1000,3],"uint8")*255
 plus = cv2.imread("plusminus20.jpg")
+brus = cv2.imread("brush_r1.png")
+eras = cv2.imread("eraser1.png")
 brush = False
 eraser = False
 pressed = False
 size = 5
 color = (0,0,0) 
  # Tools select block 
-page[20:40,20:40] =(0,0,0)      # brush black block
-page[20:40,60:80] =(0,0,0)     # eraser black block
+
+page[:,:50] = (211,211,211)
+page[0:50,:] = (211,211,211)
+page[20:40,20:40] = brus[:,:]    # brush black block
+page[20:40,60:80] =eras[:,:]     # eraser black block
 page[80:100,20:40] =(0,0,255)   # color red block
 page[110:130,20:40] =(0,255,0) #color green bolck
 page[140:160,20:40] =(255,0,0) #color blue block 
 page[180:200,20:40] = plus[0:20,0:20] #plus symbol block 
 page[220:240,20:40] = plus[0:20,20:40] # minus symbol block
-
 def click(event,y,x,flags,para):
     global page,brush,eraser,pressed,color,size
 
@@ -86,6 +90,10 @@ cv2.namedWindow("page")
 cv2.setMouseCallback("page",click)
 
 while True:
+    page[:35,300:400]=(211,211,211)   
+    cv2.putText(page,"Size:"+ str(size), (300,30), cv2.FONT_HERSHEY_SIMPLEX, .5, (255, 255,255),lineType=cv2.LINE_AA) 
+
+
     cv2.imshow("page",page)
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break 
