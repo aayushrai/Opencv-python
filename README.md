@@ -1,19 +1,17 @@
 # Opencv-python
 
-It is very famous python module for computer vision,this module also very helpful in image processing.
+It is a very famous python module for computer vision,this module is also very useful in image processing.
 
 ## Details
 
-In opencv we can perform many different operation like read,write,show images.This project give you basic understanding 
-of different operation in opencv module.In this project i try to creat painting softwear which have paint brush and eraser.
-Also have three color's of brush red,green and blue. if you want contribute please checkout paint.py file that's very intersting 
-you can contribute there and you also add other operation of opencv module for contribute.
-
+In opencv we can perform many different operations like read,write,show images.This project gives you basic understanding 
+of different operations in opencv module.In this project I tried to develop painting software which has a paint brush and an eraser.
+It also has three colors of brush red,green and blue.If you want to contribute please checkout paint.py and you can also add other operations of opencv module.It's very intersting and hope you'll like it.
 
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+A step by step series of examples that tells you how to get a development environment running
 
 First install python3 
 
