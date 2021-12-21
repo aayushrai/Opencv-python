@@ -11,22 +11,37 @@ pressed = False
 size = 5
 color = (0,0,0) 
 a,b,c,d= None,None,None,None    # ,  ,  x ,y
-arr = False
+line = False
+arr_line = False
+rec = False
+fill_rec =  False
+cir = False
+fill_cir = False
  # Tools select block 
 
 page[:,:50] = (211,211,211)
 page[0:50,:] = (211,211,211)
 page[20:40,20:40] = brus[:,:]    # brush black block
-page[20:40,60:80] =eras[:,:]     # eraser black block
+page[20:40,50:70] =eras[:,:]     # eraser black block
+page[20:40,90:110] = 255                   #To create white block
+cv2.line(page,(93,30),(107,30),color,1)  #To show the line  color = (0,0,0)
+page[20:40,120:140] = 255
+cv2.arrowedLine(page,(123,30),(137,30),1,tipLength=0.3)  #To show the Arrowed Line
+page[20:40,150:170] = 255
+cv2.rectangle(page ,(152,25),(167,35),color ,1)
+page[20:40,180:200] = 255
+cv2.circle(page,(190,30),8,color,1)
+page[20:40,210:230] = 255
+cv2.rectangle(page ,(212,25),(227,35),color ,-1)
+page[20:40,240:260] = 255
+cv2.circle(page,(250,30),8,color,-1)
 page[80:100,20:40] =(0,0,255)   # color red block
 page[110:130,20:40] =(0,255,0) #color green bolck
 page[140:160,20:40] =(255,0,0) #color blue block 
 page[180:200,20:40] = plus[0:20,0:20] #plus symbol block 
 page[220:240,20:40] = plus[0:20,20:40] # minus symbol block
-page[260:280,20:40] = 255
-cv2.line(page,(22,270),(38,270),(0,0,0),1)
 def click(event,y,x,flags,para):
-    global page,brush,eraser,pressed,color,size,arr,a,b,c,d
+    global page,brush,eraser,pressed,color,size,arr_line,line,rec,cir,fill_rec,fill_cir,a,b,c,d
 
     if event == cv2.EVENT_LBUTTONDOWN:   # Brush on or off
         if x in range(20,40) and y in range(20,40):
@@ -36,7 +51,7 @@ def click(event,y,x,flags,para):
             print("eraser=",eraser)  
 
     if event == cv2.EVENT_LBUTTONDOWN:
-        if x in range(20,40) and y in range(60,80):   #eraser on or off
+        if x in range(20,40) and y in range(50,70):   #eraser on or off
             eraser = np.invert(eraser)
             brush = False
             print("brush=", brush)
@@ -65,10 +80,55 @@ def click(event,y,x,flags,para):
             print("size:",size)
  # To Draw a Line 
     if event == cv2.EVENT_LBUTTONDBLCLK:
-        if x in range(260,280) and y in range (20,40):
+        if y in range(90,110) and x in range (20,40):
             brush  = False
             eraser = False
-            arr = True
+            line = True
+ #To Draw Arrowed line
+    if event == cv2.EVENT_LBUTTONDBLCLK:
+        if y in range(120,140) and x in range (20,40):
+            brush  = False
+            eraser = False
+            line = False
+            arr_line = True
+    #To Draw Rectangle
+    if event == cv2.EVENT_LBUTTONDBLCLK:
+        if y in range(150,170) and x in range (20,40):
+            brush  = False
+            eraser = False
+            line = False
+            arr_line = False
+            rec = True
+    #To Draw Circle
+    if event == cv2.EVENT_LBUTTONDBLCLK:
+        if y in range(180,200) and x in range (20,40):
+            brush  = False
+            eraser = False
+            line = False
+            arr_line = False
+            rec = False
+            cir = True
+    #To Draw Filled Rectangle
+    if event == cv2.EVENT_LBUTTONDBLCLK:
+        if y in range(210,230) and x in range (20,40):
+            brush  = False
+            eraser = False
+            line = False
+            arr_line = False
+            rec = False
+            cir = False
+            fill_rec = True
+     #To Draw FIlled Circle
+    if event == cv2.EVENT_LBUTTONDBLCLK:
+        if y in range(240,260) and x in range (20,40):
+            brush  = False
+            eraser = False
+            line = False
+            arr_line = False
+            rec = False
+            cir = False
+            fill_rec = False
+            fill_cir = True
  # Drawing sheet
     if x in range(50,1000) and y in range(50,1000):         # on x axis and y axis area of color is 50 t0 1000 mean paint only in area 50 to 1000
         
@@ -95,8 +155,7 @@ def click(event,y,x,flags,para):
 
              elif event == cv2.EVENT_LBUTTONUP:
                 pressed = False
-        elif arr == True:
-            brush =  False
+        elif line == True:
             if event == cv2.EVENT_LBUTTONDOWN:
                 pressed = True
                 d,c=x,y
@@ -105,6 +164,60 @@ def click(event,y,x,flags,para):
                 b,a = x,y
                 pressed = False
                 cv2.line(page , (a,b),(c,d),color ,size)
+        elif arr_line == True:
+            if event == cv2.EVENT_LBUTTONDOWN:
+                pressed = True
+                d,c=x,y
+
+            elif event == cv2.EVENT_LBUTTONUP:
+                b,a = x,y
+                pressed = False
+                cv2.arrowedLine(page ,(c,d), (a,b),color ,size,tipLength=0.4)
+        elif rec == True:
+            if event == cv2.EVENT_LBUTTONDOWN:
+                pressed = True
+                d,c=x,y
+
+            elif event == cv2.EVENT_LBUTTONUP:
+                b,a = x,y
+                pressed = False
+                cv2.rectangle(page , (a,b),(c,d),color ,size)
+        elif cir == True:
+            if event == cv2.EVENT_LBUTTONDOWN:
+                pressed = True
+                d,c=x,y
+
+            elif event == cv2.EVENT_LBUTTONUP:
+                b,a = x,y
+                pressed = False
+                ctr = ((a+c)//2 , (b+d)//2)
+                m = abs(b-d)
+                n = abs(a-c)
+                m = max(m,n)
+                cv2.circle(page, ctr ,m//2,color,size)
+        elif fill_rec == True:
+            if event == cv2.EVENT_LBUTTONDOWN:
+                pressed = True
+                d,c=x,y
+
+            elif event == cv2.EVENT_LBUTTONUP:
+                b,a = x,y
+                pressed = False
+                cv2.rectangle(page , (a,b),(c,d),color ,-1)
+        elif fill_cir == True:
+            if event == cv2.EVENT_LBUTTONDOWN:
+                pressed = True
+                d,c=x,y
+
+            elif event == cv2.EVENT_LBUTTONUP:
+                b,a = x,y
+                pressed = False
+                ctr = ((a+c)//2 , (b+d)//2)
+                m = abs(b-d)
+                n = abs(a-c)
+                m = max(m,n)
+                cv2.circle(page, ctr ,m//2,color,-1)
+        
                           
 cv2.namedWindow("page")
 cv2.setMouseCallback("page",click)
