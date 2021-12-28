@@ -17,6 +17,15 @@ rec = False
 fill_rec =  False
 cir = False
 fill_cir = False
+def func():
+    pass
+#Creating the TrackBar for the color
+img = np.zeros((100,450,3), dtype = "uint8")
+cv2.namedWindow("image")
+#Creating the trackbar
+cv2.createTrackbar('B',"image",0,255,func)    #For Blue color    
+cv2.createTrackbar("G","image",0,255,func)    #For Green color
+cv2.createTrackbar("R","image",0,255,func)    #For Red Color
  # Tools select block 
 
 page[:,:50] = (211,211,211)
@@ -35,9 +44,6 @@ page[20:40,210:230] = 255
 cv2.rectangle(page ,(212,25),(227,35),color ,-1)
 page[20:40,240:260] = 255
 cv2.circle(page,(250,30),8,color,-1)
-page[80:100,20:40] =(0,0,255)   # color red block
-page[110:130,20:40] =(0,255,0) #color green bolck
-page[140:160,20:40] =(255,0,0) #color blue block 
 page[180:200,20:40] = plus[0:20,0:20] #plus symbol block 
 page[220:240,20:40] = plus[0:20,20:40] # minus symbol block
 def click(event,y,x,flags,para):
@@ -56,18 +62,6 @@ def click(event,y,x,flags,para):
             brush = False
             print("brush=", brush)
             print("eraser=",eraser)
- # Red color brush
-    if event == cv2.EVENT_LBUTTONDOWN:      
-        if x in range(80,100) and y in range(20,40):
-            color =(0,0,255)
- # Green color brush 
-    if event == cv2.EVENT_LBUTTONDOWN:                   
-        if x in range(110,130) and y in range(20,40):
-            color =(0,255,0)
- # blue color brush   
-    if event == cv2.EVENT_LBUTTONDOWN:
-        if x in range(140,160) and y in range(20,40):
-            color =(255,0,0)
  # Increase brush and eraser size           
     if event == cv2.EVENT_LBUTTONDOWN:
         if x in range(180,200) and y in range(20,40):
@@ -226,8 +220,14 @@ while True:
     page[:35,300:400]=(211,211,211)   
     cv2.putText(page,"Size:"+ str(size), (300,30), cv2.FONT_HERSHEY_SIMPLEX, .5, (255, 255,255),lineType=cv2.LINE_AA) 
 
-
+    cv2.imshow("image",img)
     cv2.imshow("page",page)
+    #Taking values from trckbar
+    b = cv2.getTrackbarPos("B","image")
+    g = cv2.getTrackbarPos("G","image")
+    r = cv2.getTrackbarPos("R","image")
+    img[:] = [b,g,r]
+    color = (b,g,r)
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break 
    
